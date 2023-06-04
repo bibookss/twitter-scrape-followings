@@ -31,16 +31,14 @@ def login(driver, username, password):
     # Wait for login
     time.sleep(5)
 
-def write_csv(username_to_followings):
+def write_csv(username, username_to_followings):
     # Specify the CSV file path
     csv_file = 'user_followings.csv'
 
     # Write the dictionary to the CSV file
     with open(csv_file, 'a', newline='') as file:
         writer = csv.writer(file)
-        # writer.writerow(['Username', 'Followings'])  # Write header row
-        for username, followings in username_to_followings.items():
-            writer.writerow([username, ','.join(followings)])
+        writer.writerow([username, ','.join(username_to_followings[username])])
 
     print(f"Data saved to {csv_file}")
 
@@ -146,7 +144,7 @@ def start_scrape(driver, target, usernames_to_scrape):
         print(username_to_followings[username])
 
         print(f'{len(usernames_to_scrape)} usernames left to scrape')
-        write_csv(username_to_followings)
+        write_csv(username, username_to_followings)
 
     return username_to_followings
 
